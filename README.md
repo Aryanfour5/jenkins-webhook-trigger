@@ -269,6 +269,7 @@ curl -s http://localhost:8888/
 - All pages functional and responsive
 <img width="1916" height="969" alt="image" src="https://github.com/user-attachments/assets/759834b6-b0df-4496-8fd3-933ea5c77458" />
 <img width="1919" height="971" alt="image" src="https://github.com/user-attachments/assets/b555922e-dbd8-44bf-9a1f-06eb27e760c2" />
+
 <img width="1916" height="958" alt="image" src="https://github.com/user-attachments/assets/17e2167f-d0c4-466c-a90d-e4652781faff" />
 
 
