@@ -6,15 +6,15 @@ pipeline {
     }
     
     stages {
-        stage('Cleanup Old Containers') {
+        stage('Force Cleanup') {
             steps {
-                echo '========== Cleanup Stage =========='
+                echo '========== Force Cleanup Stage =========='
                 script {
                     sh '''
-                        echo "Stopping old containers..."
-                        docker ps -a | grep weather-monitor && docker stop $(docker ps -a -q -f "name=weather-monitor") || true
-                        docker ps -a | grep weather-monitor && docker rm $(docker ps -a -q -f "name=weather-monitor") || true
-                        echo "Cleanup completed"
+                        echo "Force killing and removing all weather-monitor containers..."
+                        docker ps -a --filter "name=weather-monitor" --format "{{.ID}}" | xargs -r docker rm -f
+                        echo "All containers cleaned up"
+                        docker ps -a | grep weather-monitor || echo "No weather-monitor containers found"
                     '''
                 }
             }
@@ -34,21 +34,23 @@ pipeline {
                 script {
                     sh '''
                         cd weather-monitor
+                        echo "Building Docker image: weather-monitor:${BUILD_NUMBER}"
                         docker build -t weather-monitor:${BUILD_NUMBER} .
-                        echo "Docker image built: weather-monitor:${BUILD_NUMBER}"
+                        echo "Docker image built successfully"
                     '''
                 }
             }
         }
         
-        stage('Run Container') {
+        stage('Run Container on Port 8888') {
             steps {
-                echo '========== Running Container =========='
+                echo '========== Running Container on Port 8888 =========='
                 script {
                     sh '''
-                        docker run -d -p 3000:3000 --name weather-monitor-${BUILD_NUMBER} weather-monitor:${BUILD_NUMBER}
-                        sleep 2
-                        echo "Container started on port 3000"
+                        echo "Starting container on port 8888..."
+                        docker run -d -p 8888:3000 --name weather-monitor-${BUILD_NUMBER} weather-monitor:${BUILD_NUMBER}
+                        sleep 3
+                        echo "Container started successfully on http://localhost:8888"
                         docker ps | grep weather-monitor
                     '''
                 }
@@ -61,7 +63,8 @@ pipeline {
                 script {
                     sh '''
                         sleep 2
-                        curl -s http://localhost:3000/ | head -10
+                        echo "Testing application on port 8888..."
+                        curl -s http://localhost:8888/ | head -15 || echo "Health check may still be initializing..."
                     '''
                 }
             }
@@ -70,13 +73,14 @@ pipeline {
     
     post {
         always {
-            echo '========== Build Completed =========='
+            echo '========== Build Status =========='
+            sh 'docker ps | grep weather-monitor || echo "Container info"'
         }
         success {
-            echo '✓ Deployment successful on port 3000!'
+            echo '✓ Deployment successful on http://localhost:8888'
         }
         failure {
-            echo '✗ Build failed - check logs'
+            echo '✗ Build failed - check logs above'
         }
     }
 }
