@@ -1,14 +1,5 @@
 {
-  "name": "weather-monitor",
+  "name": "weather-monitor-static",
   "version": "1.0.0",
-  "description": "Weather monitoring app",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "axios": "^1.6.0"
-  }
+  "description": "Static weather app with Python HTTP server"
 }

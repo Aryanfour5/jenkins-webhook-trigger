@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pune Weather - Weather Monitor</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <i class="fas fa-cloud-sun"></i>
+          <span>WeatherMonitor</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="pune.html" class="nav-link active">Pune</a></li>
+          <li><a href="mumbai.html" class="nav-link">Mumbai</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+      <div class="weather-page">
+        <div class="weather-card">
+          <div class="weather-header">
+            <h2>Pune Weather</h2>
+            <p class="last-updated">
+              Last updated: <span id="lastUpdate">just now</span>
+            </p>
+          </div>
+
+          <div class="weather-main">
+            <img
+              src="https://openweathermap.org/img/wn/02d@4x.png"
+              alt="Weather Icon"
+              class="weather-icon-large"
+            />
+            <div class="temperature-section">
+              <span class="temperature">28°C</span>
+              <p class="description">Partly Cloudy</p>
+            </div>
+          </div>
+
+          <div class="weather-details">
+            <div class="detail-item">
+              <i class="fas fa-tint"></i>
+              <div>
+                <span class="label">Humidity</span>
+                <span class="value">65%</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-wind"></i>
+              <div>
+                <span class="label">Wind Speed</span>
+                <span class="value">12 km/h</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-compress"></i>
+              <div>
+                <span class="label">Pressure</span>
+                <span class="value">1013 hPa</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-eye"></i>
+              <div>
+                <span class="label">Visibility</span>
+                <span class="value">10 km</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="weather-extra">
+            <div class="extra-item">
+              <span>Feels Like</span>
+              <strong>26°C</strong>
+            </div>
+            <div class="extra-item">
+              <span>UV Index</span>
+              <strong>5 (Moderate)</strong>
+            </div>
+          </div>
+
+          <div class="additional-info">
+            <h3>City Information</h3>
+            <ul>
+              <li><strong>Latitude:</strong> 18.5204°N</li>
+              <li><strong>Longitude:</strong> 73.8567°E</li>
+              <li><strong>Altitude:</strong> 560m above sea level</li>
+              <li><strong>Known as:</strong> Oxford of the East</li>
+            </ul>
+          </div>
+
+          <a href="index.html" class="btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        updateLastUpdate();
+        setInterval(updateLastUpdate, 60000);
+      });
+    </script>
+  </body>
+</html>

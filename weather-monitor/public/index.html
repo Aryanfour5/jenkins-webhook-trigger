@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather Monitor - Beautiful Weather App</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Weather Monitor - Choose City</title>
+    <link rel="stylesheet" href="css/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -19,205 +19,70 @@
           <span>WeatherMonitor</span>
         </div>
         <ul class="nav-menu">
-          <li>
-            <a href="#" onclick="showPage('home')" class="nav-link active"
-              >Current</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showPage('forecast')" class="nav-link"
-              >Forecast</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showPage('favorites')" class="nav-link"
-              >Favorites</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showPage('settings')" class="nav-link"
-              >Settings</a
-            >
-          </li>
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="pune.html" class="nav-link">Pune</a></li>
+          <li><a href="mumbai.html" class="nav-link">Mumbai</a></li>
         </ul>
       </div>
     </nav>
 
     <!-- Main Container -->
     <div class="container">
-      <!-- Page: Current Weather -->
-      <div id="home" class="page active">
-        <div class="search-box">
-          <input
-            type="text"
-            id="cityInput"
-            placeholder="Search city..."
-            class="search-input"
-          />
-          <button onclick="searchWeather()" class="search-btn">
-            <i class="fas fa-search"></i>
-          </button>
+      <div class="home-page">
+        <div class="welcome-section">
+          <h1>Welcome to Weather Monitor</h1>
+          <p>Check weather for different cities in India</p>
         </div>
 
-        <div id="weatherContainer" class="weather-container">
-          <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Loading weather data...</p>
+        <div class="city-grid">
+          <div class="city-card">
+            <div class="city-icon">
+              <i class="fas fa-city"></i>
+            </div>
+            <h2>Pune</h2>
+            <p>City of hills and IT industry</p>
+            <p class="temp-info">~28°C</p>
+            <a href="pune.html" class="btn-primary"> View Weather </a>
+          </div>
+
+          <div class="city-card">
+            <div class="city-icon">
+              <i class="fas fa-water"></i>
+            </div>
+            <h2>Mumbai</h2>
+            <p>Financial capital with coastal vibes</p>
+            <p class="temp-info">~32°C</p>
+            <a href="mumbai.html" class="btn-primary"> View Weather </a>
           </div>
         </div>
 
-        <div id="currentWeather" class="weather-card" style="display: none">
-          <div class="weather-header">
-            <h2 id="cityName" class="city-name">City Name</h2>
-            <p id="lastUpdated" class="last-updated">Updated now</p>
-          </div>
-
-          <div class="weather-main">
-            <img
-              id="weatherIcon"
-              src=""
-              alt="Weather Icon"
-              class="weather-icon-large"
-            />
-            <div class="temperature-section">
-              <span id="temperature" class="temperature">0°C</span>
-              <p id="description" class="description">Clear Sky</p>
+        <div class="info-section">
+          <h3>About This App</h3>
+          <p>
+            This is a simple weather monitoring application built with static
+            HTML, CSS, and JavaScript.
+          </p>
+          <p>
+            Weather data updates automatically when you visit each city page.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <strong>2</strong>
+              <span>Cities</span>
             </div>
-          </div>
-
-          <div class="weather-details">
-            <div class="detail-item">
-              <i class="fas fa-tint"></i>
-              <div>
-                <span class="label">Humidity</span>
-                <span id="humidity" class="value">0%</span>
-              </div>
+            <div class="stat">
+              <strong>Static</strong>
+              <span>Pages</span>
             </div>
-            <div class="detail-item">
-              <i class="fas fa-wind"></i>
-              <div>
-                <span class="label">Wind Speed</span>
-                <span id="windSpeed" class="value">0 m/s</span>
-              </div>
+            <div class="stat">
+              <strong>Docker</strong>
+              <span>Ready</span>
             </div>
-            <div class="detail-item">
-              <i class="fas fa-compress"></i>
-              <div>
-                <span class="label">Pressure</span>
-                <span id="pressure" class="value">0 hPa</span>
-              </div>
-            </div>
-            <div class="detail-item">
-              <i class="fas fa-eye"></i>
-              <div>
-                <span class="label">Visibility</span>
-                <span id="visibility" class="value">0 km</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="weather-extra">
-            <div class="extra-item">
-              <span>Feels Like</span>
-              <strong id="feelsLike">0°C</strong>
-            </div>
-            <div class="extra-item">
-              <span>UV Index</span>
-              <strong id="uvIndex">N/A</strong>
-            </div>
-          </div>
-
-          <button onclick="addToFavorites()" class="favorite-btn">
-            <i class="fas fa-heart"></i>
-            Add to Favorites
-          </button>
-        </div>
-      </div>
-
-      <!-- Page: Forecast -->
-      <div id="forecast" class="page">
-        <div class="forecast-header">
-          <h2>5-Day Forecast for <span id="forecastCity">--</span></h2>
-        </div>
-        <div id="forecastContainer" class="forecast-grid">
-          <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Loading forecast...</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page: Favorites -->
-      <div id="favorites" class="page">
-        <div class="favorites-header">
-          <h2>Favorite Cities</h2>
-        </div>
-        <div id="favoritesContainer" class="favorites-grid">
-          <div class="empty-state">
-            <i class="fas fa-star"></i>
-            <p>No favorite cities yet</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page: Settings -->
-      <div id="settings" class="page">
-        <div class="settings-container">
-          <h2>Settings</h2>
-
-          <div class="setting-item">
-            <label for="tempUnit">Temperature Unit:</label>
-            <select id="tempUnit" onchange="updateSettings()">
-              <option value="celsius">Celsius (°C)</option>
-              <option value="fahrenheit">Fahrenheit (°F)</option>
-            </select>
-          </div>
-
-          <div class="setting-item">
-            <label for="theme">Theme:</label>
-            <select id="theme" onchange="updateSettings()">
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="auto">Auto</option>
-            </select>
-          </div>
-
-          <div class="setting-item">
-            <label>
-              <input
-                type="checkbox"
-                id="notifications"
-                onchange="updateSettings()"
-              />
-              Enable Notifications
-            </label>
-          </div>
-
-          <div class="setting-item">
-            <button onclick="clearAllData()" class="danger-btn">
-              Clear All Data
-            </button>
-          </div>
-
-          <div class="api-info">
-            <h3>About</h3>
-            <p>Weather Monitor v1.0</p>
-            <p>Powered by OpenWeatherMap API</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Error Modal -->
-    <div id="errorModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeError()">&times;</span>
-        <h3>Error</h3>
-        <p id="errorMessage"></p>
-        <button onclick="closeError()" class="btn-primary">OK</button>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

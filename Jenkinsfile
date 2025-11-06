@@ -11,7 +11,7 @@ pipeline {
                 echo '========== Cleanup Stage =========='
                 script {
                     sh '''
-                        echo "Stopping and removing old containers..."
+                        echo "Stopping old containers..."
                         docker ps -a | grep weather-monitor && docker stop $(docker ps -a -q -f "name=weather-monitor") || true
                         docker ps -a | grep weather-monitor && docker rm $(docker ps -a -q -f "name=weather-monitor") || true
                         echo "Cleanup completed"
@@ -34,9 +34,8 @@ pipeline {
                 script {
                     sh '''
                         cd weather-monitor
-                        echo "Building Docker image: weather-monitor:${BUILD_NUMBER}"
                         docker build -t weather-monitor:${BUILD_NUMBER} .
-                        echo "Docker image built successfully"
+                        echo "Docker image built: weather-monitor:${BUILD_NUMBER}"
                     '''
                 }
             }
@@ -47,10 +46,9 @@ pipeline {
                 echo '========== Running Container =========='
                 script {
                     sh '''
-                        echo "Starting container on port 3000..."
                         docker run -d -p 3000:3000 --name weather-monitor-${BUILD_NUMBER} weather-monitor:${BUILD_NUMBER}
-                        sleep 3
-                        echo "Container started successfully"
+                        sleep 2
+                        echo "Container started on port 3000"
                         docker ps | grep weather-monitor
                     '''
                 }
@@ -62,8 +60,8 @@ pipeline {
                 echo '========== Health Check =========='
                 script {
                     sh '''
-                        echo "Testing application endpoint..."
-                        curl -s http://localhost:3000/ | head -20 || echo "Health check in progress..."
+                        sleep 2
+                        curl -s http://localhost:3000/ | head -10
                     '''
                 }
             }
@@ -72,14 +70,13 @@ pipeline {
     
     post {
         always {
-            echo '========== Build Status =========='
-            sh 'docker ps | grep weather-monitor || echo "No containers running"'
+            echo '========== Build Completed =========='
         }
         success {
-            echo '✓ Build and deployment successful!'
+            echo '✓ Deployment successful on port 3000!'
         }
         failure {
-            echo '✗ Build failed - check logs above'
+            echo '✗ Build failed - check logs'
         }
     }
 }
