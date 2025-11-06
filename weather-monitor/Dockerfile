@@ -5,12 +5,12 @@ WORKDIR /app
 # Copy public folder
 COPY public/ /app/
 
-# Expose port
+# Expose port 3000 (internal)
 EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:3000/')" || exit 1
 
-# Start simple HTTP server on port 3000
+# Start simple HTTP server on port 3000 (internal)
 CMD ["python", "-m", "http.server", "3000"]
