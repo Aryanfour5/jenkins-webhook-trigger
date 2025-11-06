@@ -364,76 +364,8 @@ EXPOSE 3000
 
 ---
 
-## 🐛 Troubleshooting
 
-### Port 8888 Already in Use
 
-**Solution:** Kill existing containers
-```bash
-docker ps -a | grep weather-monitor
-docker rm -f <container_id>
-```
-
-Or use different port in Jenkinsfile:
-```bash
-docker run -d -p 8889:3000 ...
-# Access on http://localhost:8889
-```
-
-### Jenkins Not Receiving Webhook
-
-**Check:**
-1. ngrok tunnel is running: `ngrok http 8080`
-2. GitHub webhook delivery: Settings → Webhooks → Recent Deliveries
-3. Jenkins "GitHub hook trigger" is enabled on job
-4. Payload URL is correct
-
-### Docker Build Fails
-
-**Check:**
-```bash
-# Verify files exist
-ls -la weather-monitor/public/
-ls -la weather-monitor/Dockerfile
-
-# Test build manually
-cd weather-monitor
-docker build -t test .
-```
-
-### Application Not Responding
-
-**Check:**
-```bash
-# Verify container is running
-docker ps | grep weather-monitor
-
-# Check logs
-docker logs <container_id>
-
-# Test endpoint
-curl http://localhost:8888/
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
 
 ## 👤 Author
 
@@ -444,10 +376,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 🌟 Show Your Support
-
-Give a ⭐️ if this project helped you learn CI/CD!
-
----
-
-**Built with ❤️ using Jenkins, Docker, and GitHub Webhooks**
